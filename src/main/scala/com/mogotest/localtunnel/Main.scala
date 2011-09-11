@@ -3,7 +3,6 @@ package com.mogotest.localtunnel
 import java.io.File;
 import collection.JavaConversions._
 
-import ch.ethz.ssh2.Connection
 import com.beust.jcommander.{ParameterException, JCommander, Parameter}
 
 
@@ -11,9 +10,6 @@ object Main
 {
   object Args
   {
-    @Parameter(names = Array("-k", "--key"), description = "Upload a public key for authentication", required = true)
-    var privateSshKey: File = null
-
     @Parameter(names = Array("--tunnel_host"), description = "Connect to the named tunnel host (advanced debug mode)", hidden = true)
     var tunnelHost: String = "open.mogotunnel.com:8888"
 
@@ -63,22 +59,19 @@ object Main
     val reflectedHost = if (reflectedConnection.contains(':')) reflectedConnection.split(':').head else "127.0.0.1"
     val reflectedPort = if (reflectedConnection.contains(':')) reflectedConnection.split(':').last.toInt else reflectedConnection.toInt
 
-    val conn = new Connection("open.mogotunnel.com")
-    conn.connect
+    val tunnel = new Tunnel(Args.tunnelHost, reflectedHost, reflectedPort)
+    val response = tunnel.registerTunnel
 
-    val isAuthenticated = conn.authenticateWithPublicKey("localtunnel", Args.privateSshKey, null)
-
-    if (isAuthenticated)
+    try
     {
-      conn.requestRemotePortForwarding("127.0.0.1", 30003, reflectedHost, reflectedPort)
+      tunnel.startTunnel(response)
     }
-    else
+    catch
     {
-      println("Invalid SSH key supplied.")
-      println(parser.usage)
-      sys.exit(-1)
+      case e: Exception => { println(e.getMessage); println(parser.usage); sys.exit(-1) }
     }
 
-    Thread.sleep(60000)
+    while (true)
+      Thread.sleep(1000)
   }
 }
