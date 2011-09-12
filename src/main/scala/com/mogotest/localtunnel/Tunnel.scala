@@ -25,7 +25,7 @@ class Tunnel(tunnelHost: String, reflectedHost: String, reflectedPort: Int)
     res
   }
 
-  def startTunnel(tunnelConfig: ServerResponse)
+  def startTunnel(tunnelConfig: ServerResponse, mogotest: Mogotest)
   {
     val privateKey = new ByteArrayOutputStream()
     keyPair.writePrivateKey(privateKey)
@@ -47,8 +47,8 @@ class Tunnel(tunnelHost: String, reflectedHost: String, reflectedPort: Int)
     if (!tunnelConfig.banner.isEmpty)
       println("  " + tunnelConfig.banner)
 
-    println(String.format("  Host %s on port %s is now publicly accessible from http://%s/ ...",
-      reflectedHost, reflectedPort.toString, tunnelConfig.host))
+    println(String.format("   You're good to go. Any tests you run against '%s' on Mogotest will now access the site running on http://%s:%s/.",
+      mogotest.testHost, reflectedHost, reflectedPort.toString))
 
     sys.ShutdownHookThread { session.delPortForwardingR(tunnelConfig.throughPort) }
   }
