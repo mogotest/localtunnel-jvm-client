@@ -9,7 +9,7 @@ resolvers += "JSch plugin repo" at "http://jsch.sf.net/maven2/"
 libraryDependencies ++= Seq(
   "com.beust" % "jcommander" % "1.18",
   "com.jcraft" % "jsch" % "0.1.44",
-  "org.scalaj" % "scalaj-http_2.9.0-1" % "0.2.8"
+  "org.scalaj" %% "scalaj-http" % "0.2.9"
 )
 
 seq(sbtassembly.Plugin.assemblySettings: _*)
