@@ -1,6 +1,5 @@
 package com.mogotest.localtunnel
 
-import java.io.File;
 import collection.JavaConversions._
 
 import com.beust.jcommander.{ParameterException, JCommander, Parameter}
@@ -62,9 +61,14 @@ object Main
     val tunnel = new Tunnel(Args.tunnelHost, reflectedHost, reflectedPort)
     val response = tunnel.registerTunnel
 
+    val mogotest = new Mogotest(Args.apiHost, apiKey, testHost, response.host)
+    mogotest.notifyMogotestOfTunnel
+
+    sys.addShutdownHook { mogotest.teardown_tunnel_in_mogotest }
+
     try
     {
-      tunnel.startTunnel(response)
+      tunnel.startTunnel(response, mogotest)
     }
     catch
     {
