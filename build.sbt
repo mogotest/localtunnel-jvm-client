@@ -4,6 +4,9 @@ version := "1.0.0-SNAPSHOT"
 
 scalaVersion := "2.9.1"
 
+// Disable using the Scala version in output paths and artifacts.
+crossPaths := false
+
 resolvers += "JSch plugin repo" at "http://jsch.sf.net/maven2/"
 
 libraryDependencies ++= Seq(
