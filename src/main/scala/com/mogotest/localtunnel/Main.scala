@@ -15,7 +15,7 @@ object Main
     @Parameter(names = Array("--api_host"), description = "Connect to the named API host for registration (advanced debug mode)", hidden = true)
     var apiHost: String = "mogotest.com"
 
-    @Parameter(names = Array("-h", "--help"), description = "Show this help message.")
+    @Parameter(names = Array("-h", "--help"), description = "Show this help message.", hidden = true)
     var showHelp: Boolean = false
 
     @Parameter
@@ -36,18 +36,18 @@ object Main
     }
     catch
     {
-      case e: ParameterException => { println(e.getMessage); println(parser.usage); sys.exit(-1) }
+      case e: ParameterException => { println(e.getMessage); parser.usage; sys.exit(-1) }
     }
 
     if (Args.showHelp)
     {
-      println(parser.usage)
+      parser.usage
       sys.exit(0)
     }
 
     if ((Args.args == null) || (Args.args.length != 3))
     {
-      println(parser.usage)
+      parser.usage
       sys.exit(-1)
     }
 
@@ -72,7 +72,7 @@ object Main
     }
     catch
     {
-      case e: Exception => { println(e.getMessage); println(parser.usage); sys.exit(-1) }
+      case e: Exception => { println(e.getMessage); parser.usage; sys.exit(-1) }
     }
 
     while (true)
