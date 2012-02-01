@@ -16,14 +16,16 @@
 
 package com.mogotest.localtunnel
 
-import scalaj.http.Http
+import scalaj.http.{Http, HttpOptions}
 
 case class Mogotest(apiHost: String, apiKey: String, testHost: String, tunnelUrl: String)
 {
   def notifyMogotestOfTunnel()
   {
     val responseCode = Http.post(String.format("https://%s/api/v1/ssh_tunnels", apiHost)).
-        params("user_credentials" -> apiKey, "hostname" -> testHost,"tunnel_url" -> tunnelUrl).responseCode
+                            option(HttpOptions.connTimeout(1000)).
+                            option(HttpOptions.readTimeout(5000)).
+                            params("user_credentials" -> apiKey, "hostname" -> testHost,"tunnel_url" -> tunnelUrl).responseCode
 
     if (responseCode != 201)
     {
@@ -35,7 +37,9 @@ case class Mogotest(apiHost: String, apiKey: String, testHost: String, tunnelUrl
   def teardown_tunnel_in_mogotest()
   {
     val responseCode = Http.post(String.format("https://%s/api/v1/ssh_tunnels/destroy", apiHost)).
-        params("user_credentials" -> apiKey, "hostname" -> testHost).responseCode
+                            option(HttpOptions.connTimeout(1000)).
+                            option(HttpOptions.readTimeout(5000)).
+                            params("user_credentials" -> apiKey, "hostname" -> testHost).responseCode
 
     if (responseCode != 200)
     {

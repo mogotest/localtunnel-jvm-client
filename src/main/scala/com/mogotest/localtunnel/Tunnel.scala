@@ -16,7 +16,7 @@
 
 package com.mogotest.localtunnel
 
-import scalaj.http.Http
+import scalaj.http.{Http, HttpOptions}
 import com.jcraft.jsch.{JSch, KeyPair}
 import java.io.ByteArrayOutputStream
 
@@ -30,7 +30,10 @@ class Tunnel(tunnelHost: String, reflectedHost: String, reflectedPort: Int)
     val publicKey = new ByteArrayOutputStream()
     keyPair.writePublicKey(publicKey, "localtunnel")
 
-    val res = new ServerResponse(Http.post(String.format("http://%s/", tunnelHost)).params("key" -> publicKey.toString).asString)
+    val res = new ServerResponse(Http.post(String.format("http://%s/", tunnelHost)).
+                                      option(HttpOptions.connTimeout(1000)).
+                                      option(HttpOptions.readTimeout(5000)).
+                                      params("key" -> publicKey.toString).asString)
 
     if (res.errorMessage != null)
     {
