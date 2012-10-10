@@ -26,7 +26,7 @@ object Main
   object Args
   {
     @Parameter(names = Array("--tunnel_host"), description = "Connect to the named tunnel host (advanced debug mode)", hidden = true)
-    var tunnelHost: String = "open.mogotunnel.com:8888"
+    var tunnelHost: String = "open.mogotunnel.com:80"
 
     @Parameter(names = Array("--api_host"), description = "Connect to the named API host for registration (advanced debug mode)", hidden = true)
     var apiHost: String = "mogotest.com"
