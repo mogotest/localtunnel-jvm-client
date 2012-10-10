@@ -10,7 +10,7 @@ crossPaths := false
 resolvers += "JSch plugin repo" at "http://jsch.sf.net/maven2/"
 
 libraryDependencies ++= Seq(
-  "com.beust" % "jcommander" % "1.18",
+  "com.beust" % "jcommander" % "1.27",
   "com.jcraft" % "jsch" % "0.1.48",
   "org.scalaj" %% "scalaj-http" % "0.3.2"
 )
