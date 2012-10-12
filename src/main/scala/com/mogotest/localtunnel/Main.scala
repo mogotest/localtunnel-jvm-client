@@ -80,7 +80,7 @@ object Main
     val mogotest = new Mogotest(Args.apiHost, apiKey, testHost, response.host)
     mogotest.notifyMogotestOfTunnel
 
-    sys.addShutdownHook { mogotest.teardown_tunnel_in_mogotest }
+    sys.addShutdownHook { mogotest.teardownTunnelInMogotest }
 
     try
     {

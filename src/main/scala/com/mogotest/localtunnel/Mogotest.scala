@@ -34,7 +34,7 @@ case class Mogotest(apiHost: String, apiKey: String, testHost: String, tunnelUrl
     }
   }
 
-  def teardown_tunnel_in_mogotest()
+  def teardownTunnelInMogotest()
   {
     val responseCode = Http.post(String.format("https://%s/api/v1/ssh_tunnels/destroy", apiHost)).
                             option(HttpOptions.connTimeout(1000)).
