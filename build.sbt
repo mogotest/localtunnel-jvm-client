@@ -1,8 +1,8 @@
 name := "Mogotest SSH Tunnel Client"
 
-version := "1.1.0"
+version := "1.2.0"
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.10.1"
 
 // Disable using the Scala version in output paths and artifacts.
 crossPaths := false
@@ -12,7 +12,7 @@ resolvers += "JSch plugin repo" at "http://jsch.sf.net/maven2/"
 libraryDependencies ++= Seq(
   "com.beust" % "jcommander" % "1.27",
   "com.jcraft" % "jsch" % "0.1.48",
-  "org.scalaj" %% "scalaj-http" % "0.3.2"
+  "org.scalaj" %% "scalaj-http" % "0.3.6"
 )
 
 seq(sbtassembly.Plugin.assemblySettings: _*)
