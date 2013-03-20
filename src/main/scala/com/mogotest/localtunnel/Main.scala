@@ -34,6 +34,9 @@ object Main
     @Parameter(names = Array("-h", "--help"), description = "Show this help message.", hidden = true)
     var showHelp: Boolean = false
 
+    @Parameter(names = Array("-v", "--version"), description = "Print out the version.", hidden = true)
+    var showVersion: Boolean = false
+
     @Parameter
     var args: java.util.List[String] = null
   }
@@ -58,6 +61,12 @@ object Main
     if (Args.showHelp)
     {
       parser.usage
+      sys.exit(0)
+    }
+
+    if (Args.showVersion)
+    {
+      println("1.2.0")
       sys.exit(0)
     }
 
