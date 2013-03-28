@@ -83,6 +83,17 @@ object Main
     val reflectedHost = if (reflectedConnection.contains(':')) reflectedConnection.split(':').head else "127.0.0.1"
     val reflectedPort = if (reflectedConnection.contains(':')) reflectedConnection.split(':').last.toInt else reflectedConnection.toInt
 
+    // Sync HTTPS and HTTP proxy settings if one isn't specified.
+    if ((System.getProperty("http.proxyHost") == null) && (System.getProperty("https.proxyHost") != null))
+    {
+      System.setProperty("http.proxyHost", System.getProperty("https.proxyHost"))
+    }
+
+    if ((System.getProperty("http.proxyPort") == null) && (System.getProperty("https.proxyPort") != null))
+    {
+      System.setProperty("http.proxyPort", System.getProperty("https.proxyPort"))
+    }
+
     val proxyUsername = System.getProperty("https.proxyUsername")
     val proxyPassword = System.getProperty("https.proxyPassword")
 
