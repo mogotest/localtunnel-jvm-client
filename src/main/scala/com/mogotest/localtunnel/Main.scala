@@ -17,7 +17,7 @@
 package com.mogotest.localtunnel
 
 import collection.JavaConversions._
-
+import java.net.{Authenticator, PasswordAuthentication}
 import com.beust.jcommander.{ParameterException, JCommander, Parameter}
 
 
@@ -82,6 +82,18 @@ object Main
 
     val reflectedHost = if (reflectedConnection.contains(':')) reflectedConnection.split(':').head else "127.0.0.1"
     val reflectedPort = if (reflectedConnection.contains(':')) reflectedConnection.split(':').last.toInt else reflectedConnection.toInt
+
+    val proxyUsername = System.getProperty("https.proxyUsername")
+    val proxyPassword = System.getProperty("https.proxyPassword")
+
+    // Set up proxy authentication if credentials were supplied.
+    if ((proxyUsername != null) && (proxyPassword != null))
+    {
+      Authenticator.setDefault(new Authenticator
+      {
+        override def getPasswordAuthentication : PasswordAuthentication = new PasswordAuthentication(proxyUsername, proxyPassword.toCharArray)
+      })
+    }
 
     val tunnel = new Tunnel(Args.tunnelHost, reflectedHost, reflectedPort)
     val response = tunnel.registerTunnel
