@@ -1,5 +1,6 @@
 .idea/
 .idea_modules/
+atlassian-ide-plugin.xml
 target/
 project/boot/
 project/target/
