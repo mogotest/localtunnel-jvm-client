@@ -2,6 +2,7 @@
 
   * Added support for authenticating with a proxy server.
   * Simplified proxy server configuration by synchronizing HTTPS and HTTP proxy info if the latter is not configured.
+  * Added "-v" and "--version" flags to print out the version of the tool.
   * Updated Scala 2.9.2 to 2.10.1 to pick up some bug fixes and performance improvements.
   * Updated JCommander from 1.27 to 1.30 to get some bug fixes.
   * Updated JSch from 0.1.48 to 0.1.49 to get some bug fixes and performance improvements.
